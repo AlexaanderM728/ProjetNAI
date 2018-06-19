@@ -7,7 +7,6 @@
 // materiały pomocnicze
 // https://docs.swift.org/swift-book/LanguageGuide/StringsAndCharacters.html
 //https://docs.swift.org/swift-book/LanguageGuide/Functions.html
-//https://pypi.org/project/coremltools/
 //https://www.youtube.com/watch?v=h2MdQoRMtlQ&t=279s
 //
 
@@ -60,7 +59,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     
     func pictureIdentifyML(image:UIImage){ // funkcja do rozpoznania obiektu ze zdjecia
         //pobieranie modelu core ml
-        guard let model = try? VNCoreMLModel(for: OrangeOrApple().model) else {
+        guard let model = try? VNCoreMLModel(for: TuriCreate().model) else {
             fatalError("blad uczenia maszynowego")
         }
         // zadanie pobrania
@@ -72,10 +71,23 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
                     fatalError("nie moge pobrac wyniku")
             }
             
-    
+            var wart = firstResult.identifier
+            if(wart.contains("apple")){
+                wart = "weglowdoany: 14 g\n białka; 0.3 g \n tłuszcze: 0.2 g "
+            }
+            if(wart.contains("orange")){
+               
+                wart = "weglowdoany: 9.4g\n białka; 0.9 g \n tłuszcze: 0.2 g "
+            }
+            if(wart.contains("banana")){
+                
+                wart = "weglowdoany: 21.8 g\n białka; 1 g \n tłuszcze: 0.3 g "
+            }
+            if(wart.contains("pear")){
+                
+                wart = "weglowdoany: 10 g\n białka; 1 g \n tłuszcze: 0.1 g "
+            }
          
-            
-            
             DispatchQueue.main.async { // wynik rozpoznanaia
                 self?.laImageDescription.text = "Pewność to: \(Int(firstResult.confidence * 100))%, \n Detekcja : \(firstResult.identifier) \n wartosci odzywcze w 100g \n  \(wart)"
                 
